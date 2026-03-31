@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>本質から、はじめるキャリアセッション</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #faf6f0;
+    --gold: #c8a96e;
+    --gold-light: #e8d5a8;
+    --mist: #8b7d6b;
+    --blush: #d4a5a0;
+    --sage: #7a8c7a;
+    --accent: #9b6b5a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.6;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 24px;
+    position: relative;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 20% 20%, rgba(200, 169, 110, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 80%, rgba(212, 165, 160, 0.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .moon-deco {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 1px solid rgba(200, 169, 110, 0.3);
+    margin: 0 auto 40px;
+    position: relative;
+    animation: moonPulse 4s ease-in-out infinite;
+  }
+
+  .moon-deco::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(200, 169, 110, 0.2);
+  }
+
+  .moon-deco::after {
+    content: '✦';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--gold);
+    font-size: 28px;
+    opacity: 0.7;
+  }
+
+  @keyframes moonPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.03); }
+  }
+
+  .hero-label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(32px, 8vw, 54px);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--accent);
+    position: relative;
+  }
+
+  .hero-title em::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--mist);
+    line-height: 2;
+    max-width: 340px;
+    margin: 0 auto 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-cta {
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 32px;
+    margin: 0 auto;
+    max-width: 320px;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+  }
+
+  .divider-mark {
+    color: var(--gold);
+    font-size: 12px;
+    opacity: 0.6;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 64px 24px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .section-body {
+    font-size: 14px;
+    color: var(--mist);
+    line-height: 2.2;
+  }
+
+  /* PAIN POINTS */
+  .pain-list {
+    list-style: none;
+    margin: 32px 0;
+  }
+
+  .pain-list li {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(200, 169, 110, 0.15);
+    font-size: 14px;
+    color: var(--ink);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.8;
+  }
+
+  .pain-list li::before {
+    content: '▸';
+    color: var(--blush);
+    font-size: 12px;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  /* PROFILE */
+  .profile-card {
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(200, 169, 110, 0.2);
+    border-radius: 2px;
+    padding: 36px 28px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 24px;
+    width: 40px; height: 2px;
+    background: var(--gold);
+  }
+
+  .profile-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .profile-role {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+  }
+
+  .profile-body {
+    font-size: 13px;
+    color: var(--mist);
+    line-height: 2.2;
+  }
+
+  .profile-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 4px 12px;
+    border: 1px solid rgba(200, 169, 110, 0.3);
+    border-radius: 20px;
+    color: var(--mist);
+  }
+
+  /* MENU */
+  .menu-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .menu-card {
+    border: 1px solid rgba(200, 169, 110, 0.2);
+    padding: 28px;
+    position: relative;
+    background: rgba(255,255,255,0.4);
+    transition: all 0.3s ease;
+  }
+
+  .menu-card:hover {
+    background: rgba(255,255,255,0.7);
+    border-color: rgba(200, 169, 110, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .menu-card.featured {
+    border-color: var(--gold);
+    background: rgba(200, 169, 110, 0.05);
+  }
+
+  .menu-card.featured::before {
+    content: 'おすすめ';
+    position: absolute;
+    top: -1px; right: 20px;
+    background: var(--gold);
+    color: white;
+    font-size: 10px;
+    padding: 3px 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .menu-num {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+
+  .menu-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .menu-time {
+    font-size: 12px;
+    color: var(--mist);
+    margin-bottom: 12px;
+  }
+
+  .menu-desc {
+    font-size: 13px;
+    color: var(--mist);
+    line-height: 2;
+    margin-bottom: 16px;
+  }
+
+  .menu-price {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 24px;
+    color: var(--accent);
+  }
+
+  .menu-price span {
+    font-size: 13px;
+    color: var(--mist);
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  /* FLOW */
+  .flow-steps {
+    margin: 32px 0;
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px dashed rgba(200, 169, 110, 0.2);
+  }
+
+  .flow-step:last-child { border-bottom: none; }
+
+  .flow-num {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 28px;
+    color: var(--gold-light);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 32px;
+    text-align: center;
+  }
+
+  .flow-content .flow-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .flow-content .flow-desc {
+    font-size: 13px;
+    color: var(--mist);
+    line-height: 1.8;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 64px 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(200, 169, 110, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section .section-title {
+    max-width: 340px;
+    margin: 0 auto 16px;
+  }
+
+  .cta-section .section-body {
+    max-width: 320px;
+    margin: 0 auto 40px;
+  }
+
+  /* BUTTON */
+  .btn-primary {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    padding: 18px 48px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--accent);
+    transition: left 0.3s ease;
+    z-index: 0;
+  }
+
+  .btn-primary:hover::before { left: 0; }
+
+  .btn-primary span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    border: 1px solid rgba(200, 169, 110, 0.4);
+    color: var(--mist);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    padding: 14px 36px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-top: 16px;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* NOTE */
+  .note-box {
+    background: rgba(200, 169, 110, 0.06);
+    border-left: 2px solid var(--gold);
+    padding: 20px 20px;
+    margin: 32px 0;
+    font-size: 13px;
+    color: var(--mist);
+    line-height: 2;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 24px;
+    text-align: center;
+    border-top: 1px solid rgba(200, 169, 110, 0.15);
+  }
+
+  footer .footer-mark {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  footer p {
+    font-size: 11px;
+    color: var(--mist);
+    letter-spacing: 0.1em;
+  }
+
+  /* Scroll animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="moon-deco"></div>
+  <p class="hero-label">Career Session</p>
+  <h1 class="hero-title">
+    あなたの<em>本質</em>から、<br>はじめるキャリア。
+  </h1>
+  <p class="hero-sub">
+    転職するかどうかより先に、<br>
+    「わたしは何者で、どう生きたいか」<br>
+    を知ることが、すべての出発点です。
+  </p>
+  <div class="hero-cta">
+    <a href="#menu" class="btn-primary"><span>セッションを見る</span></a>
+  </div>
+</div>
+
+<div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+
+<!-- PAIN -->
+<section>
+  <p class="section-label reveal">for you</p>
+  <h2 class="section-title reveal">こんな気持ち、<br>ありませんか？</h2>
+  <ul class="pain-list">
+    <li class="reveal">なんとなく今の仕事が合わない気がするけど、何がしたいのかわからない</li>
+    <li class="reveal">転職サイトを見ても、ピンとくる求人がない</li>
+    <li class="reveal">頑張ってきたのに、なぜか満たされない</li>
+    <li class="reveal">「自分らしい働き方」ってどんなものか、イメージできない</li>
+    <li class="reveal">強みを聞かれても、うまく答えられない</li>
+  </ul>
+  <p class="section-body reveal">
+    それは、あなたが怠けているのではなく、<br>
+    まだ「自分の本質」と出会えていないから。<br><br>
+    求人を探す前に、まず<strong>あなた自身を知る</strong>ことが必要です。
+  </p>
+</section>
+
+<div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+
+<!-- PROFILE -->
+<section>
+  <p class="section-label reveal">about</p>
+  <h2 class="section-title reveal">担当者について</h2>
+  <div class="profile-card reveal">
+    <p class="profile-name">さとう　うたこ</p>
+    <p class="profile-role">Career Consultant ／ Soul Analyst</p>
+    <p class="profile-body">
+      人材紹介会社でキャリアアドバイザーとして4年、派遣コーディネーターとして3年、のべ数百名のキャリアに携わってきました。<br><br>
+      国家資格キャリアコンサルタントの知見に加え、数秘・九星気学・個性鑑定など「人の本質を見る」ツールを組み合わせることで、スキルや経歴だけでは見えてこない「その人らしい生き方」を一緒に言語化します。
+    </p>
+    <div class="profile-tags">
+      <span class="tag">国家資格キャリアコンサルタント</span>
+      <span class="tag">数秘術</span>
+      <span class="tag">九星気学</span>
+      <span class="tag">個性鑑定学</span>
+      <span class="tag">人材業界7年</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+
+<!-- MENU -->
+<section id="menu">
+  <p class="section-label reveal">menu</p>
+  <h2 class="section-title reveal">セッションメニュー</h2>
+  <div class="menu-cards">
+
+    <div class="menu-card reveal">
+      <p class="menu-num">SESSION 01</p>
+      <p class="menu-name">お試し相談</p>
+      <p class="menu-time">30分 ／ オンライン（Zoom）または対面</p>
+      <p class="menu-desc">現在の状況をヒアリングし、今後の方向性を整理します。「まず話してみたい」という方はここから。</p>
+      <p class="menu-price">¥3,000<span>（税込）</span></p>
+    </div>
+
+    <div class="menu-card featured reveal">
+      <p class="menu-num">SESSION 02</p>
+      <p class="menu-name">本質キャリア棚卸しセッション</p>
+      <p class="menu-time">90分 ／ オンライン（Zoom）または対面</p>
+      <p class="menu-desc">
+        これまでの仕事・転機・やりがいを丁寧に振り返り、あなたの強みと価値観を言語化。数秘・個性鑑定を使った本質分析つき。「何がしたいか」より「どんな時に輝けるか」を一緒に見つけます。
+      </p>
+      <p class="menu-price">¥15,000<span>（税込）</span></p>
+    </div>
+
+    <div class="menu-card reveal">
+      <p class="menu-num">SESSION 03</p>
+      <p class="menu-name">継続伴走サポート</p>
+      <p class="menu-time">月2回 × 3ヶ月 ／ 計6回</p>
+      <p class="menu-desc">本質セッション後、行動に移るまでを一緒に歩みます。迷ったとき・止まったときに寄り添いながら、自分らしいキャリアを実現するサポートをします。</p>
+      <p class="menu-price">¥30,000<span>／月（税込）</span></p>
+    </div>
+
+  </div>
+
+  <div class="note-box reveal">
+    💡 初めての方は「お試し相談（SESSION 01）」からお気軽にどうぞ。セッション後に継続をご案内することもあります。
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+
+<!-- FLOW -->
+<section>
+  <p class="section-label reveal">flow</p>
+  <h2 class="section-title reveal">お申し込みの流れ</h2>
+  <div class="flow-steps">
+    <div class="flow-step reveal">
+      <div class="flow-num">1</div>
+      <div class="flow-content">
+        <p class="flow-title">LINEで友だち追加</p>
+        <p class="flow-desc">このページからLINE公式アカウントを友だち追加してください。</p>
+      </div>
+    </div>
+    <div class="flow-step reveal">
+      <div class="flow-num">2</div>
+      <div class="flow-content">
+        <p class="flow-title">ご希望のメニューを送る</p>
+        <p class="flow-desc">「お試し相談希望」「本質セッション希望」などとメッセージをお送りください。</p>
+      </div>
+    </div>
+    <div class="flow-step reveal">
+      <div class="flow-num">3</div>
+      <div class="flow-content">
+        <p class="flow-title">日程調整・お支払い</p>
+        <p class="flow-desc">ご都合のよい日程をご連絡いただき、決済方法をご案内します。</p>
+      </div>
+    </div>
+    <div class="flow-step reveal">
+      <div class="flow-num">4</div>
+      <div class="flow-content">
+        <p class="flow-title">セッション当日</p>
+        <p class="flow-desc">ZoomのURLまたは対面場所をお伝えします。当日はリラックスしてお越しください。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <p class="section-label reveal">contact</p>
+  <h2 class="section-title reveal">
+    まず、話してみませんか。</h2>
+  <p class="section-body reveal">
+    答えを出す場ではなく、<br>
+    自分を知る場所です。<br>
+    あなたのペースで、大丈夫。
+  </p>
+  <div class="reveal">
+    <a href="https://lin.ee/yXtqglp" class="btn-primary"><span>LINE で申し込む</span></a><br>
+    <a href="https://lin.ee/yXtqglp" class="btn-secondary">お試し相談（30分 ¥3,000）を予約する</a>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-mark">✦</p>
+  <p>Career Session ／ さとう　うたこ</p>
+  <p style="margin-top:8px">© 2026 All rights reserved.</p>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
